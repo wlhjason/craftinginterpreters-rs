@@ -20,7 +20,12 @@ pub unsafe fn disassemble_instruction(chunk: &Chunk, offset: usize) -> usize {
     let opcode = OpCode::try_from(instruction).expect("Unknown opcode");
     let name = &format!("{}", opcode);
     match opcode {
-        OpCode::Return => simple_instruction(name, offset),
+        OpCode::Add
+        | OpCode::Subtract
+        | OpCode::Multiply
+        | OpCode::Divide
+        | OpCode::Negate
+        | OpCode::Return => simple_instruction(name, offset),
         OpCode::Constant => constant_instruction(name, chunk, offset),
     }
 }

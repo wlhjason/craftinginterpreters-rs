@@ -6,6 +6,11 @@ use std::ptr::null_mut;
 #[derive(Debug)]
 pub enum OpCode {
     Constant,
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    Negate,
     Return,
 }
 
@@ -15,7 +20,12 @@ impl TryFrom<u8> for OpCode {
     fn try_from(value: u8) -> Result<Self, Self::Error> {
         match value {
             0 => Ok(OpCode::Constant),
-            1 => Ok(OpCode::Return),
+            1 => Ok(OpCode::Add),
+            2 => Ok(OpCode::Subtract),
+            3 => Ok(OpCode::Multiply),
+            4 => Ok(OpCode::Divide),
+            5 => Ok(OpCode::Negate),
+            6 => Ok(OpCode::Return),
             _ => Err(()),
         }
     }
