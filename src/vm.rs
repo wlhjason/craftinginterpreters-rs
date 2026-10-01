@@ -1,4 +1,5 @@
 use crate::chunk::{Chunk, OpCode};
+use crate::compiler::compile;
 use crate::value::Value;
 use std::ptr::null_mut;
 
@@ -11,7 +12,7 @@ pub struct VM {
     stack_top: *mut Value,
 }
 
-#[allow(dead_code)]
+#[derive(Debug)]
 pub enum InterpretError {
     CompileError,
     RuntimeError,
@@ -37,11 +38,10 @@ pub unsafe fn init_vm() {
 
 pub unsafe fn free_vm() {}
 
-pub unsafe fn interpret(chunk: *mut Chunk) -> Result<(), InterpretError> {
+pub unsafe fn interpret(source: &str) -> Result<(), InterpretError> {
     unsafe {
-        VM.chunk = chunk;
-        VM.ip = (*VM.chunk).code;
-        run()
+        compile(source);
+        Ok(())
     }
 }
 
